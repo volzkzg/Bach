@@ -33,12 +33,14 @@ class TaskHandler(tornado.web.RequestHandler):
         if token != const.TOKEN:
             self.send_error()
             return
+        print('got task request')
 
         while not mutex.acquire():
             time.sleep(random.random())
         self.set_header('Content-Type', 'application/json')
 
         doc = db.ais.find_and_modify({'status':'Pending'}, update={'$set':{'status':'Building'}}, sort=[('_id',1)])
+        print(doc)
         if doc:
             self.write(toJSON({ 'type': 'ai', 'doc': doc }))
             mutex.release()

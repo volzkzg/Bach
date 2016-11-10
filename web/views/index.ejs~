@@ -1,0 +1,7 @@
+<% include head %>
+<div class="jumbotron">
+  <h1>Bach</h1>
+  <p class="lead">is an incredible platform, where amazing happens. </p>
+  <p><a class="btn btn-danger btn-lg" href="/battle/list" role="button">Watch the battle.</a></p>
+</div>
+<% include foot %>

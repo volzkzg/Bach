@@ -114,22 +114,31 @@ class Updater:
 
         self.lastid = self.db.updater.find_one({'type': 'lastid'})['id']
         self.userId = dict()
+
+
         for user in self.db.users.find({}):
             self.userId[user['name']] = user['_id']
+        
         self.records = []
         timebound = time.mktime(datetime.utcnow().timetuple())
+
         self.lastrow = 0
         for rec in self.db.records.find({'_id': {'$gt': self.lastid}}, projection={'sourceCode': False}).sort('_id', 1):
             self.records.append(rec)
 
+        
         timestamp = self.db.updater.find_one({'type': 'timestamp'})['value']
+
         if len(self.records) == 0:
             timebound = 0
         else:
             lasttime = time.mktime(self.records[self.lastrow]['submitDate'].timetuple())
         while timestamp < timebound:
-            if self.records[self.lastrow]['status'] != 'Finished':
-                break
+
+
+            print lasttime
+            print timestamp
+            print timebound
             if lasttime <= timestamp:
                 res = self._updateRating(timestamp)
                 if self.lastrow == len(self.records):
@@ -140,6 +149,7 @@ class Updater:
                 res = None
             print datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S'), res
             timestamp += 120
+
         self.db.updater.update({'type': 'lastid'}, {'$set': {'id': self.lastid}})
         self.db.updater.update({'type': 'timestamp'}, {'$set': {'value': timestamp}})
         os.remove('/tmp/rating_updater.lock')

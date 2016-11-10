@@ -1,144 +1,121 @@
 <% include head %>
+<div class="container p-t-0">
+<div class="row container">
+<div class="alert alert-primary col-sm-5" role="alert">
+  <p>AI Name</p>
+  <h4 class="alert-heading"><%= ai.name %></h4>
+</div>
+<div class="col-sm-2">
 
-<h1>AI Status <small><%= ai.name %> of <%= ai.user %> (<%= ai.idOfUser %>)</small></h1>
+</div>
+<div class="alert alert-primary col-sm-5" role="alert">
+  <p>AI Owner</p>
+  <h4 class="alert-heading"><%= ai.user %></h4>
+</div>
+</div>
+
+<div class="row container">
+<div class="alert alert-success col-sm-5" role="alert">
+  <p>Submitted Data</p>
+  <h4 class="alert-heading"><%=: ai.uploadDate | formatDate %></h4>
+</div>
+<div class="col-sm-2">
+</div>
+<div class="alert alert-success col-sm-5" role="alert">
+  <p>Status</p>
+  <h4 class="alert-heading"><%= ai.status %></h4>
+</div>
+</div>
+
+<div class="row container">
+<div class="alert alert-success col-sm-5" role="alert">
+  <p>Win</p>
+  <h4 class="alert-heading"><%=: ai.win %></h4>
+</div>
+<div class="col-sm-2">
+</div>
+<div class="alert alert-success col-sm-5" role="alert">
+  <p>Draw</p>
+  <h4 class="alert-heading"><%= ai.draw %></h4>
+</div>
+</div>
+
+<div class="row container">
+<div class="alert alert-success col-sm-5" role="alert">
+  <p>Lose</p>
+  <h4 class="alert-heading"><%=: ai.lose %></h4>
+</div>
+<div class="col-sm-2">
+</div>
+<div class="alert alert-success col-sm-5" role="alert">
+  <p>Rating</p>
+  <h4 class="alert-heading"><%= ai.rating %></h4>
+</div>
+</div>
+
+
+<% if (ai.user === user.name || settings.adminUsernames.indexOf(user.name) > -1) { %>
+  <% if (ai.buildInfo) { %>
+  <div class="row container">
+<div class="alert alert-success" role="alert">
+  <p>Build Information</p>
+  <pre class="alert-heading"><%= ai.buildInfo %></pre>
+</div>
+</div>
+  <% } %>
+
+
+  <div class="row container">
+  <div class="alert alert-success" role="alert">
+  <p>Source Code</p>
+  <pre class="source-code prettyprint lang-cpp"><%= ai.sourceCode %></pre>
+  </div>
+  </div
+<% } %>
+
+
+
+
 <% if (user.isLogin && ai.status === 'Available') { %>
 <!-- Button trigger modal -->
-<div>
-<button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#give-battle">Start a battle!</button>
+<div class="p-t-2">
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#give-battle">Start a battle!</button>
 </div>
 
 <!-- Modal -->
 <div class="modal fade" id="give-battle" tabindex="-1" role="dialog" aria-labelledby="give-battle-label" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="give-battle-label">Start a battle with <small><%= ai.name %> of <%= ai.user %> (<%= ai.idOfUser %>)</small>!</h4>
+        <button type="button" class="close" data-dismiss="modal">
+	  <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+	</button>
+        <h4 class="modal-title" id="give-battle-label">Start a battle</h4>
       </div>
-      <form class="form-horizontal" role="form" action="/battle/start" method="post">
-        <input type="hidden" value="<%= ai._id %>" name="ai1">
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="myai" class="col-sm-2 control-label">My AI</label>
-            <div class="col-sm-10">
-              <select class="form-control" id="myai" name="ai0">
-              <% for (var i = 0; i < myAI.length; ++i) { %>
-                <option value="<%= myAI[i]._id %>">(Submit <%= myAI[i].idOfUser %>) <%= myAI[i].name %></option>
-              <% } %>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <input type="submit" class="btn btn-primary" value="Start a Battle!">
-        </div>
+
+      <form role="form" action="/battle/start" method="post">
+      <input type="hidden" value="<%= ai._id %>" name="ai1">
+      <div class="modal-body">
+	  <div class="form-group">
+	    	<select class="form-control" name="ai0">
+         	<option selected>Choose One of Your AI</option>
+                <% for (var i = 0; i < myAI.length; ++i) { %>
+                  <option value="<%= myAI[i]._id %>">(Submit <%= myAI[i].idOfUser %>) <%= myAI[i].name %></option>
+                <% } %>
+                </select>
+	  </div>
+      </div>
+      <div class="modal-footer" >
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" value="Start">
+      </div>
       </form>
+
     </div>
   </div>
 </div>
 <% } else { %>
 <div><button class="btn btn-warning btn-lg disabled" disabled>Start a Battle!</button>
-<% } %>
-
-<dl class="dl-horizontal">
-  <dt>Code Name</dt><dd><%= ai.name %></dd>
-  <dt>User (Times of Submit)</dt><dd><%= ai.user %> (<%= ai.idOfUser %>)</dd>
-  <dt>Submit Date</dt><dd><%=: ai.uploadDate | formatDate %></dd>
-  <% if (ai.status === 'Pending') { %>
-    <dt>Status</dt><dd><span class="label label-default"><%= ai.status %></span></dd>
-  <% } else if (ai.status === 'Available') { %>
-    <dt>Status</dt><dd><span class="label label-success"><%= ai.status %></span></dd>
-  <% } else { %>
-    <dt>Status</dt><dd><span class="label label-danger"><%= ai.status %></span></dd>
-  <% } %>
-</dl>
-
-<div id="chart"></div>
-
-<h2>Win <span class="badge"><%= ai.win %></span></h2>
-<table class="table table-hover table-striped">
-<thead>
-  <tr class="active">
-    <td>AI 1</td>
-    <td>AI 2</td>
-    <td>Step</td>
-    <td>Date</td>
-    <td></td>
-  </tr>
-</thead>
-<tbody>
-<% for (var i = 0; i < wins.length; ++i) { %>
-<%   var rec = wins[i]; %>
-  <tr>
-    <td class="<%= rec.result==0?'success':'danger' %>"><a href="/ai/<%= rec.ids[0] %>"><%= rec.name0 %></a> of <small><%= rec.user0 %> (<%= rec.idOfUser0 %>)</small></td>
-    <td class="<%= rec.result==1?'success':'danger' %>"><a href="/ai/<%= rec.ids[0] %>"><a href="/ai/<%= rec.ids[1] %>"><%= rec.name1 %></a> of <small><%= rec.user1 %> (<%= rec.idOfUser1 %>)</small></td>
-    <td><%= rec.step %></td>
-    <td><%=: rec.runDate | formatDate %></td>
-    <td><a href="/battle/<%= rec._id %>" target="_blank">(Demo)</a></td>
-  </tr>
-<% } %>
-</tbody>
-</table>
-
-<h2>Lose <span class="badge"><%= ai.lose %></span></h2>
-<table class="table table-hover table-striped">
-<thead>
-  <tr class="active">
-    <td>AI 1</td>
-    <td>AI 2</td>
-    <td>Step</td>
-    <td>Date</td>
-    <td></td>
-  </tr>
-</thead>
-<tbody>
-<% for (var i = 0; i < lose.length; ++i) { %>
-<%   var rec = lose[i]; %>
-  <tr>
-    <td class="<%= rec.result==0?'success':'danger' %>"><a href="/ai/<%= rec.ids[0] %>"><a href="/ai/<%= rec.ids[0] %>"><%= rec.name0 %></a> of <small><%= rec.user0 %> (<%= rec.idOfUser0 %>)</small></td>
-    <td class="<%= rec.result==1?'success':'danger' %>"><a href="/ai/<%= rec.ids[0] %>"><a href="/ai/<%= rec.ids[1] %>"><%= rec.name1 %></a> of <small><%= rec.user1 %> (<%= rec.idOfUser1 %>)</small></td>
-    <td><%= rec.step %></td>
-    <td><%=: rec.runDate | formatDate %></td>
-    <td><a href="/battle/<%= rec._id %>" target="_blank">(Demo)</a></td>
-  </tr>
-<% } %>
-</tbody>
-</table>
-
-<h2>Draw <span class="badge"><%= ai.draw %></span></h2>
-<table class="table table-hover table-striped">
-<thead>
-  <tr class="active">
-    <td>AI 1</td>
-    <td>AI 2</td>
-    <td>Step</td>
-    <td>Date</td>
-    <td></td>
-  </tr>
-</thead>
-<tbody>
-<% for (var i = 0; i < draw.length; ++i) { %>
-<%   var rec = draw[i]; %>
-  <tr class="warning">
-    <td class="warning"><a href="/ai/<%= rec.ids[0] %>"><%= rec.name0 %></a> of <small><%= rec.user0 %> (<%= rec.idOfUser0 %>)</small></td>
-    <td class="warning"><a href="/ai/<%= rec.ids[1] %>"><%= rec.name1 %></a> of <small><%= rec.user1 %> (<%= rec.idOfUser1 %>)</small></td>
-    <td><%= rec.step %></td>
-    <td><%=: rec.runDate | formatDate %></td>
-    <td><a href="/battle/<%= rec._id %>" target="_blank">(Demo)</a></td>
-  </tr>
-<% } %>
-</tbody>
-</table>
-
-<% if (ai.user === user.name || settings.adminUsernames.indexOf(user.name) > -1) { %>
-  <% if (ai.buildInfo) { %>
-    <h2>Build Infomation</h2>
-    <pre><%= ai.buildInfo %></pre>
-  <% } %>
-
-  <h2>Source Code</h2>
-  <pre class="source-code prettyprint lang-cpp"><%= ai.sourceCode %></pre>
 <% } %>
 
 <% include foot_script %>
@@ -150,4 +127,5 @@
 ratingChart.setup("<%= ai._id %>/rating.json");
 prettyPrint();
 </script>
+</div>
 <% include foot_close %>

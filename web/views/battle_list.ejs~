@@ -1,0 +1,69 @@
+<% include head %>
+<div class="container">
+<table class="table table-stripe">
+<thead>
+  <tr>
+    <th>AI 1</th>
+    <th>AI 2</th>
+    <th>Status</th>
+    <th>Step</th>
+    <th>Submit Date</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+<% 
+  var refresh_list = [];
+  for (var i = 0; i < list.length; ++i) { 
+    var rec = list[i];
+    if (rec.status !== 'Finished') {
+      refresh_list.push(i);
+    }
+%>
+  <tr id="row-<%= i %>">
+    <td class="<%= getColor(rec.result, 0) %>"><a href="/ai/<%= rec.ids[0] %>"><%= rec.name0 %></a> of <small><%= rec.user0 %> (<%= rec.idOfUser0 %>)</small></td>
+    <td class="<%= getColor(rec.result, 1) %>"><a href="/ai/<%= rec.ids[1] %>"><%= rec.name1 %></a> of <small><%= rec.user1 %> (<%= rec.idOfUser1 %>)</small></td>
+    <% if (rec.status === 'Running')  { %>
+      <td class="table-warning"><%= rec.status %></td>
+      <td class="steps"><img src="/images/ball.svg"> <span id="span-steps"><%= rec.step %></span></td>
+    <% } else if (rec.status === 'Finished') { %>
+      <td class="table-success"><%= rec.status %></td>
+      <td class="steps"><%= rec.step %></td>
+    <% } else { %>
+      <td class="table-info"><%= rec.status %></td>
+      <td class="steps"></td>
+    <% } %>
+    <td><%=: rec.submitDate | formatDate %></td>
+    <td><a href="/battle/<%= rec._id %>">(Demo)</a></td>
+  </tr>
+<% } %>
+</tbody>
+</table>
+
+<nav>
+  <ul class="pager">
+  <% if (page === 1) { %>
+    <li class="previous disabled"><a href="#">&larr; Newer</a></li>
+  <% } else { %>
+    <li class="previous"><a href="/battle/list?page=<%= page-1 %>">&larr; Newer</a></li>
+  <% } %>
+
+
+  <% if (page === totpage) { %>
+    <li class="next disabled"><a href="#">&rarr; Older</a></li>
+  <% } else { %>
+    <li class="next"><a href="/battle/list?page=<%= page+1 %>">&rarr; Older</a></li>
+  <% } %>
+  </ul>
+</nav>
+
+</div>
+
+<% include foot_script %>
+<% if (refresh_list.length) { %>
+<script src="<%= settings.staticCDN %>/js/refresh_steps.js?20151202"></script>
+<script><% for (var i = 0; i < refresh_list.length; ++i) { var rec = list[refresh_list[i]]; %>
+watch("#row-<%= refresh_list[i] %>", "/battle/<%= rec._id %>-steps.json");<% } %>
+</script>
+<% } %>
+<% include foot_close %>

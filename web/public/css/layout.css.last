@@ -1,0 +1,138 @@
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+textarea, input[type="text"], input[type="password"] {
+  font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+.source-code {
+  font-size: 13px;
+  line-height: 15px;
+}
+
+.bg-black {
+  background-color: #444444;
+}
+
+.bg-red {
+  background-color: #562C27;
+}
+
+/* ==================== Chess Board ==================== */
+
+#chess-board {
+  border: 5px solid #eee;
+}
+
+#chess-board td {
+  height: 65px;
+  width: 65px;
+  border: 5px solid #eee;
+}
+
+#float-chess {
+  height: 65px;
+  width: 65px;
+  border: 5px solid #eee;
+}
+
+.hidden {
+  display: none;
+}
+
+#float-chess {
+  position: absolute;
+}
+
+.img-chess {
+  background-image: url(/images/chess.png);
+}
+
+.img-red-1 { background-position:    0px 0px; }
+.img-red-2 { background-position:  -60px 0px; }
+.img-red-5 { background-position: -120px 0px; }
+.img-red-3 { background-position: -180px 0px; }
+.img-red-4 { background-position: -240px 0px; }
+.img-red-6 { background-position: -300px 0px; }
+.img-red-7 { background-position: -360px 0px; }
+
+.img-black-1 { background-position:    0px -60px; }
+.img-black-2 { background-position:  -60px -60px; }
+.img-black-5 { background-position: -120px -60px; }
+.img-black-3 { background-position: -180px -60px; }
+.img-black-4 { background-position: -240px -60px; }
+.img-black-6 { background-position: -300px -60px; }
+.img-black-7 { background-position: -360px -60px; }
+
+.img-blank { background-position: -420px -60px; }
+
+
+
+#demo-text {
+  line-height: 2em;
+  height: 3em;
+  padding: 0.5em;
+  margin-top: 0.5em;
+  width: 453px;
+}
+
+.c3-region.rankcolor-0 { fill: rgb(200, 200, 200); }
+.c3-region.rankcolor-1 { fill: rgb(159, 238, 159); }
+.c3-region.rankcolor-2 { fill: rgb(119, 255, 119); }
+.c3-region.rankcolor-3 { fill: rgb(169, 169, 254); }
+.c3-region.rankcolor-4 { fill: rgb(253, 135, 253); }
+.c3-region.rankcolor-5 { fill: rgb(244, 195, 130); }
+.c3-region.rankcolor-6 { fill: rgb(255, 187, 85 ); }
+.c3-region.rankcolor-7 { fill: rgb(255, 119, 119); }
+.c3-region.rankcolor-8 { fill: rgb(253, 51 , 51 ); }
+
+.c3-region.rankcolor-0 rect,
+.c3-region.rankcolor-1 rect,
+.c3-region.rankcolor-2 rect,
+.c3-region.rankcolor-3 rect,
+.c3-region.rankcolor-4 rect,
+.c3-region.rankcolor-5 rect,
+.c3-region.rankcolor-6 rect,
+.c3-region.rankcolor-7 rect,
+.c3-region.rankcolor-8 rect { fill-opacity: 1 !important; }

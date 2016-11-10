@@ -3,61 +3,87 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
     <title><%= typeof(title) === 'undefined' ? '' : title + ' - ' %><%= settings.websiteName %></title>
-    <link href="<%= settings.staticCDN %>/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+<!--    <link href="<%= settings.staticCDN %>/bootstrap/css/bootstrap.css" rel="stylesheet"> -->
     <link href="<%= settings.staticCDN %>/css/c3.css" rel="stylesheet">
     <link href="<%= settings.staticCDN %>/google-code-prettify/prettify.css" rel="stylesheet">
     <link href="<%= settings.staticCDN %>/css/layout.css?20151202v3" rel="stylesheet">
+    <link href="<%= settings.staticCDN %>/css/sticky-footer-navbar.css" rel="stylesheet">
+    
+    <script src="<%= settings.staticCDN %>/js/jquery-2.1.1.min.js"></script>
+    <script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script><!-- Tether for Bootstrap -->
   </head>
 
   <body>
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/"><%= settings.websiteName %></a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
-            <li><a href="/user/list"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> User</a></li>
-            <li><a href="/ai/list"><span class="glyphicon glyphicon-tower" aria-hidden="true"></span> AI</a></li>
-            <li><a href="/ai/list?sort=-rating"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span> Rating</a></li>
-            <li><a href="/battle/list"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Battle</a></li>
-            <li><a href="/ai/upload"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload</a></li>
-          </ul>
-          <div class="nav navbar-nav navbar-right">
-            <ul class="nav navbar-nav">
-            <% if (user.isLogin) { %>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, <strong><%= user.name %></strong> <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="/user/logout">Logout</a></li>
-                </ul>
-              </li>
-            <% } else { %>
-              <li><a href="/user/login">Login</a></li>
-              <li><a href="/user/register">Register</a></li>
-            <% } %>
-            </ul>
-          </div>
-        </div><!--/.nav-collapse -->
+    <nav class="navbar navbar-light">
+      <div class="container">
+	<div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
+	  <ul class="nav navbar-nav">
+	    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+	    <li class="nav-item"><a class="nav-link" href="/user/list">User</a></li>
+	    <li class="nav-item"><a class="nav-link" href="/ai/list?sort=-rating">Rating</a></li>
+	    <li class="nav-item"><a class="nav-link" href="/battle/list">Battle</a></li>
+	    <li class="nav-item"><a class="nav-link" href="/ai/upload">Upload</a></li>
+	  </ul>
+	  <div class="pull-xs-right">
+	    <ul class="nav navbar-nav">
+	      <% if (user.isLogin) { %>
+	      <div class="dropdown">
+		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+		  <%= user.name %>
+		</button>
+		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+		  <a class="dropdown-item" href="/user/logout">Logout</a>
+		</div>
+	      </div>
+	      <% } else { %>
+	      <li class="nav-item"><a class="nav-link" href="/user/login">Login</a></li>
+	      <li class="nav-item"><a class="nav-link" href="/user/register">Register</a></li>
+	      <% } %>
+	    </ul>
+	  </div>
+	</div>
+      </div>
+    </nav>
+
+
+    <div class="navbar navbar-default navbar-static-top">
+      <div class="navbar-collapse collapse">
+	<ul class="nav navbar-nav">
+	  <li><a href="/">Home</a></li>
+	  <li><a href="/user/list">User</a></li>
+	  <li><a href="/ai/list?sort=-rating">Rating</a></li>
+	  <li><a href="/battle/list">Battle</a></li>
+	  <li><a href="/ai/upload">Upload</a></li>
+	</ul>
+	<div class="nav navbar-nav navbar-right">
+	  <ul class="nav navbar-nav">
+	    <% if (user.isLogin) { %>
+	    <li class="dropdown">
+	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, <strong><%= user.name %></strong> <b class="caret"> </b></a>
+	      <ul class="dropdown-menu">
+		<li><a href="/user/logout">Logout</a></li>
+	      </ul>
+	    </li>
+	    <% } else { %>
+	    <li><a href="/user/login">Login</a></li>
+	    <li><a href="/user/register">Register</a></li>
+	    <% } %>
+	  </ul>
+	</div>
       </div>
     </div>
-    <div class="container-fluid">
-    <% if (locals.message) { %>
-      <div class="alert alert-danger">
-        <strong>oops...</strong>
-        <ul>
-        <% for (var i = 0; i < locals.message.length; ++i) { %>
-          <li><%= locals.message[i] %></li>
-        <% } %>
-        </ul>
-      </div>
-    <% } %>
+    <!--
+	<div class="container-fluid">
+	  <% if (locals.message) { %>
+	  <div class="alert alert-danger">
+	    <strong>oops...</strong>
+	    <ul>
+	      <% for (var i = 0; i < locals.message.length; ++i) { %>
+		 <li><%= locals.message[i] %></li>
+		 <% } %>
+	    </ul>
+	  </div>
+	  <% } %> -->
+    

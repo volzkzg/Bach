@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><%= typeof(title) === 'undefined' ? '' : title + ' - ' %><%= settings.websiteName %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+    <link href="<%= settings.staticCDN %>/css/c3.css" rel="stylesheet">
+    <link href="<%= settings.staticCDN %>/google-code-prettify/prettify.css" rel="stylesheet">
+    <link href="<%= settings.staticCDN %>/css/layout.css?20151202v3" rel="stylesheet">
+    <link href="<%= settings.staticCDN %>/css/sticky-footer-navbar.css" rel="stylesheet">
+    
+    <script src="<%= settings.staticCDN %>/js/jquery-2.1.1.min.js"></script>
+    <script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script><!-- Tether for Bootstrap -->
+    <script src="<%= settings.staticCDN %>/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="sha384-VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-light">
+      <div class="container">
+	<div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
+	  <ul class="nav navbar-nav">
+	    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+	    <li class="nav-item"><a class="nav-link" href="/user/list">User</a></li>
+	    <li class="nav-item"><a class="nav-link" href="/ai/list?sort=-rating">Rating</a></li>
+	    <li class="nav-item"><a class="nav-link" href="/battle/list">Battle</a></li>
+	    <li class="nav-item"><a class="nav-link" href="/ai/upload">Upload</a></li>
+	  </ul>
+	  <div class="pull-xs-right">
+	    <ul class="nav navbar-nav">
+	      <% if (user.isLogin) { %>
+	      <div class="dropdown">
+		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+		  <%= user.name %>
+		</button>
+		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+		  <a class="dropdown-item" href="/user/logout">Logout</a>
+		</div>
+	      </div>
+	      <% } else { %>
+	      <li class="nav-item"><a class="nav-link" href="/user/login">Login</a></li>
+	      <li class="nav-item"><a class="nav-link" href="/user/register">Register</a></li>
+	      <% } %>
+	    </ul>
+	  </div>
+	</div>
+      </div>
+    </nav>
+
+
+    <div class="navbar navbar-default navbar-static-top">
+      <div class="navbar-collapse collapse">
+	<ul class="nav navbar-nav">
+	  <li><a href="/">Home</a></li>
+	  <li><a href="/user/list">User</a></li>
+	  <li><a href="/ai/list?sort=-rating">Rating</a></li>
+	  <li><a href="/battle/list">Battle</a></li>
+	  <li><a href="/ai/upload">Upload</a></li>
+	</ul>
+	<div class="nav navbar-nav navbar-right">
+	  <ul class="nav navbar-nav">
+	    <% if (user.isLogin) { %>
+	    <li class="dropdown">
+	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, <strong><%= user.name %></strong> <b class="caret"> </b></a>
+	      <ul class="dropdown-menu">
+		<li><a href="/user/logout">Logout</a></li>
+	      </ul>
+	    </li>
+	    <% } else { %>
+	    <li><a href="/user/login">Login</a></li>
+	    <li><a href="/user/register">Register</a></li>
+	    <% } %>
+	  </ul>
+	</div>
+      </div>
+    </div>
+    <!--
+	<div class="container-fluid">
+	  <% if (locals.message) { %>
+	  <div class="alert alert-danger">
+	    <strong>oops...</strong>
+	    <ul>
+	      <% for (var i = 0; i < locals.message.length; ++i) { %>
+		 <li><%= locals.message[i] %></li>
+		 <% } %>
+	    </ul>
+	  </div>
+	  <% } %> -->
+    
