@@ -3,6 +3,7 @@ p2dv.in
 
 A system for game AI battle.
 
+- *bach* is the version for Programming Fall 2016 AI Project
 - *sjtu.cool* is the version for Programming Fall 2015 AI Project
 - *p2dv.in* is the version for Programming Fall 2014 AI Project
 
@@ -132,3 +133,10 @@ server {
 - AI Judge by `@bywbilly`: [@abcdabcd987/ACM-2015-AI-Server](https://github.com/abcdabcd987/ACM-2015-AI-Server)
 - IPC library by `@abcdabcd987`: [@abcdabcd987/py-stdio-ipc](https://github.com/abcdabcd987/py-stdio-ipc)
 - Adaption from *p2dv.in* by `@abcdabcd987`
+
+##Credits of *Bach*
+
+- Sample AI by Sidi Lu
+- AI Judge by Sidi Lu
+- Battle Demo by Xinhao Chen
+- UI Rewrite by Bicheng Gao
